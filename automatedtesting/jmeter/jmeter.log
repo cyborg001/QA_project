@@ -1,0 +1,42 @@
+2022-10-20 15:05:27,182 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2022-10-20 15:05:27,200 INFO o.a.j.JMeter: Loading user properties from: C:\apache-jmeter-5.5\apache-jmeter-5.5\bin\user.properties
+2022-10-20 15:05:27,200 INFO o.a.j.JMeter: Loading system properties from: C:\apache-jmeter-5.5\apache-jmeter-5.5\bin\system.properties
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: Copyright (c) 1998-2022 The Apache Software Foundation
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: Version 5.5
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: java.version=18
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: os.name=Windows 11
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: os.arch=amd64
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: os.version=10.0
+2022-10-20 15:05:27,208 INFO o.a.j.JMeter: file.encoding=UTF-8
+2022-10-20 15:05:27,209 INFO o.a.j.JMeter: java.awt.headless=null
+2022-10-20 15:05:27,209 INFO o.a.j.JMeter: Max memory     =1073741824
+2022-10-20 15:05:27,209 INFO o.a.j.JMeter: Available Processors =8
+2022-10-20 15:05:27,217 INFO o.a.j.JMeter: Default Locale=English (EN)
+2022-10-20 15:05:27,217 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2022-10-20 15:05:27,217 INFO o.a.j.JMeter: JMeterHome=C:\apache-jmeter-5.5\apache-jmeter-5.5
+2022-10-20 15:05:27,217 INFO o.a.j.JMeter: user.dir  =C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter
+2022-10-20 15:05:27,217 INFO o.a.j.JMeter: PWD       =C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter
+2022-10-20 15:05:27,219 INFO o.a.j.JMeter: IP: 192.168.10.103 Name: DESKTOP-2K7VTTJ FullName: host.docker.internal
+2022-10-20 15:05:27,227 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2022-10-20 15:05:27,379 INFO o.a.j.JMeterGuiLauncher: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme
+2022-10-20 15:05:35,290 INFO o.a.j.s.FileServer: Default base='C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter'
+2022-10-20 15:05:35,294 INFO o.a.j.g.a.Load: Loading file: C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter\Starter.jmx
+2022-10-20 15:05:35,294 INFO o.a.j.s.FileServer: Set new base='C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter'
+2022-10-20 15:05:35,487 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2022-10-20 15:05:35,519 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2022-10-20 15:05:35,521 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2022-10-20 15:05:35,522 INFO o.a.j.s.SaveService: Loading file: C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter\Starter.jmx
+2022-10-20 15:05:35,550 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-10-20 15:05:35,550 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-10-20 15:05:35,550 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-10-20 15:05:35,550 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-10-20 15:05:35,550 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2022-10-20 15:05:35,550 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2022-10-20 15:05:35,691 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2022-10-20 15:05:35,692 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2022-10-20 15:05:35,692 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2022-10-20 15:05:35,692 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2022-10-20 15:05:35,839 INFO o.a.j.v.ViewResultsFullVisualizer: Add JavaFX to your Java installation if you want to use renderer: org.apache.jmeter.visualizers.RenderInBrowser
+2022-10-20 15:05:35,998 INFO o.a.j.v.ViewResultsFullVisualizer: Add JavaFX to your Java installation if you want to use renderer: org.apache.jmeter.visualizers.RenderInBrowser
+2022-10-20 15:05:36,059 INFO o.a.j.s.FileServer: Set new base='C:\Users\DELL\projects\proyecto_final_udacity\automatedtesting\jmeter'

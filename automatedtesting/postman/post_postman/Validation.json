@@ -1,0 +1,434 @@
+{
+	"info": {
+		"_postman_id": "35cebbb3-6c80-4c1d-9288-fe339d52af55",
+		"name": "Validation_Activities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19662732"
+	},
+	"item": [
+		{
+			"name": "Create Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include('Completed\":true');",
+							"});",
+							"var jsonData = pm.response.json();",
+							"console.log(jsonData.ID)",
+							"pm.environment.set('ID',jsonData.ID)",
+							"",
+							"pm.test(\"Response has proper value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.ID).to.eql(pm.environment.get(\"ID\"));",
+							"});",
+							"pm.test(\"Response has proper value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.Title).to.eql(pm.environment.get(\"Title\"));",
+							"});",
+							"pm.test(\"Response has proper value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.DueDate).to.eql(pm.environment.get(\"DueDate\"));",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ID\": 3000,\n  \"Title\": \"actividad carlos\",\n  \"DueDate\": \"2022-10-21T23:05:18.227Z\",\n  \"Completed\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{activities}}/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Activities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include('ID');",
+							"})",
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include('Title');",
+							"})",
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include('DueDate');",
+							"})",
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include('Completed');",
+							"})",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{activities}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"arroz con manteca\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ID\": 1,\n  \"Title\": \"arroz con manteca\",\n  \"DueDate\": \"2022-10-21T23:05:18.227Z\",\n  \"Completed\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{activities}}/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).not.to.include(\"ID\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/{{activities}}/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Activity 4\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{activities}}/4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Authors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.value).to.not.eql('');",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"ID\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"IDBook\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"FirstName\");",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"LastName\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{authors}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{authors}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.ID).to.eql(3);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ID\": 3,\n  \"IDBook\": 0,\n  \"FirstName\": \"string\",\n  \"LastName\": \"string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{authors}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{authors}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get author",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{authors}}/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{authors}}",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).not.to.include(\"ID\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{authors}}/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{authors}}",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.ID).to.eql(2);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"string\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ID\": 2,\n  \"IDBook\": 0,\n  \"FirstName\": \"string\",\n  \"LastName\": \"string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{authors}}/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{authors}}",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Authors Book",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{book}}/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{book}}",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,282 @@
+name: Azure Pipelines
+variables:
+- group: grupo_variables
+- name: python.version
+  value: '3.7.6'
+- name: appname
+  value: "app5carlos-AppService"
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool: 
+      vmImage: 'ubuntu-latest'
+    steps:
+
+    - task: DownloadSecureFile@1
+      name: mysecfile
+      displayName: 'Download ssh keys'
+      inputs:
+        secureFile: 'mykeys'
+
+    # - task: Bash@3
+    #   displayName: Installing Terraform
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       #!/bin/bash
+    #       echo 'Instalando Terraform'
+    #       sudo snap install terraform --classic
+    #       cd '$(System.DefaultWorkingDirectory)'/terraform/environments/test
+    #       echo '$(System.DefaultWorkingDirectory)'
+    #       terraform init && terraform plan -out=myplan
+    #       terraform apply myplan
+# #         #  -auto-approve
+#         # -auto-approve permite que el pipeline se ejecute sin interaccion
+
+
+   
+    
+    - task: CmdLine@2
+      inputs:
+        script: |
+          echo '$(mypubkey)'
+
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: '$(knowHost)'
+        sshPublicKey: '$(mypubkey)'
+        sshKeySecureFile: 'mykeys' # ojo para que funcione este archivo debe ser anadido a la libreria como secure file en el portal de azure devops
+
+
+        # para acceder a la vm desde consola se accede con el siguiente comando: ssh -i mykeys carlos@20.168.234.193
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(python.version)'
+
+    - task: CmdLine@2
+      displayName: Install Newman
+      inputs:
+        script: 'sudo npm install -g newman'
+        workingDirectory: $(System.DefaultWorkingDirectory)
+
+    - task: CmdLine@2
+      displayName: Verifying working directory
+      inputs:
+        script: |
+          echo $(System.DefaultWorkingDirectory)
+        workingDirectory: $(System.DefaultWorkingDirectory)
+
+    - task: Bash@3
+      displayName: Run Regression Tests
+      continueOnError: true
+      inputs:
+        targetType: 'inline'
+        script: |
+          #! /bin/bash
+          echo '-------------------------------------------------------------------------------'
+          echo '--                       Starting Postman pre Test                           --'
+          echo '-------------------------------------------------------------------------------'
+          echo ' '
+          newman run StarterAPIS.json -e Starter_Apis.postman_environment.json --reporters junit --reporter-junit-export ./result/result.xml
+        workingDirectory: 'automatedtesting/postman'
+
+    - task: PublishTestResults@2 
+      displayName: Publicar los resultados
+      inputs:
+          testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+          testResultsFiles: '**/*.xml' 
+          searchFolder: 'automatedtesting/postman/result/'
+          #mergeTestResults: false # Optional
+          #failTaskOnFailedTests: false # Optional
+          testRunTitle: Regression Test
+          #buildPlatform: # Optional
+          #buildConfiguration: # Optional
+          #publishRunAttachments: true # Optional
+
+    # crea los artifactos
+    - task: ArchiveFiles@2
+      displayName: 'Archive Selenium-art'
+      inputs:
+        rootFolderOrFile: 'automatedtesting/selenium/'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium-art.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-selenium-art.zip
+      displayName: 'Upload Package selenium'
+      artifact: drop-selenium-test-suite-art
+
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive FakeRestAPI'
+      inputs:
+        rootFolderOrFile: 'automatedtesting/jmeter/fakerestapi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+      displayName: 'Upload Package fakerestapi'
+      artifact: drop-fakerestapi
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive Jmeter-test-suit'
+      inputs:
+        rootFolderOrFile: 'automatedtesting/jmeter/'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter-art.zip'
+        replaceExistingArchive: true
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-jmeter-art.zip
+      displayName: 'Upload Package jmeter'
+      artifact: drop-jmeter-test-suite-art
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive Postman-test-suit'
+      inputs:
+        rootFolderOrFile: 'automatedtesting/postman/post_postman'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-postman-art.zip'
+        replaceExistingArchive: true
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-postman-art.zip
+      displayName: 'Upload Package postman'
+      artifact: drop-postman-test-suite-art
+    
+
+- stage: FakeRestAPI
+  dependsOn: Build
+  condition: succeededOrFailed()
+  jobs:
+  
+  - deployment: FakeRestAPI
+    
+    pool: 
+      vmImage: 'ubuntu-latest'
+    environment: 'TEST'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy Azure Web App'
+            inputs:
+              appName: "$(appname)" # nombre del app-service o app-service plan si son iguales
+              azureSubscription: sc_final_project #este es el service conecction que se crea en azure devops
+              appType: webApp
+              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+
+
+
+  - deployment: VMDeploy
+    displayName: deploy to virtual machine
+    environment:
+      name: TEST
+      resourceType: VirtualMachine
+      tags: test
+    strategy:
+      runOnce:
+        deploy:
+          steps: 
+          - task: Bash@3
+            displayName: Jmeter Test
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                sudo timedatectl set-timezone Etc/GMT-4
+                sudo apt-get upgrade -y
+                sudo add-apt-repository universe
+                sudo apt-get update
+                sudo apt-get install unzip -y
+                sudo apt install default-jre -y
+                cd ~/azagent/_work/1/drop-jmeter-test-suite-art
+                echo 'imprimimos el directorio actual'
+                pwd
+                unzip -o $(Build.BuildId)-jmeter-art.zip
+
+                echo 'finaliza el unzip y empieza la instalacion de jmeter'
+                if [ ! -d ./apache-jmeter-5.5 ]; then
+                  wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz && \
+                  tar -zxvf apache-jmeter-5.5.tgz && rm apache-jmeter-5.5.tgz && \
+                  PATH=$PATH:~/azagent/_work/1/drop-jmeter-test-suite-art/apache-jmeter-5.5/bin/
+                fi;
+                
+                
+                echo 'chequear el '
+                pwd
+                
+                if [ -f ./myresult.csv ]; then
+                  rm ./myresult.csv
+                fi;
+
+                if [ -d ./here/ ];  then
+                  rm -rf ./here/
+                fi;
+                echo '-------------------------------------------------------------------------------'
+                echo '--                         Starting Jmeter Test                              --'
+                echo '-------------------------------------------------------------------------------'
+                echo ' '
+                ./apache-jmeter-5.5/bin/jmeter -n -t ./Starter.jmx -l myresult.csv -j logfile -e -o ./here/
+           
+          - task: Bash@3
+            displayName: Selenium Test
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
+                sudo timedatectl set-timezone Etc/GMT-4
+                sudo apt-get install python3-pip -y
+                sudo apt-get install -y chromium-browser
+                pip3 install -U selenium
+                cd ~/azagent/_work/1/drop-selenium-test-suite-art
+                unzip -o $(Build.BuildId)-selenium-art.zip
+                if [ ! -f chromedriver ]; then
+                  wget https://chromedriver.storage.googleapis.com/105.0.5195.52/chromedriver_linux64.zip && \
+                  unzip chromedriver_linux64.zip && rm chromedriver_linux64.zip
+                fi;
+                export PATH=$PATH:~/azagent/_work/1/drop-selenium-test-suite-art
+                echo '-------------------------------------------------------------------------------'
+                echo '--                       Starting Selenium Test                              --'
+                echo '-------------------------------------------------------------------------------'
+                echo ' '
+                python3 login.py
+
+- stage: Post_webapp
+  dependsOn: FakeRestAPI
+  condition: succeeded()
+  jobs:
+  - job: Post_webap
+    steps:
+      - task: CmdLine@2
+        displayName: Run Validation and Regression Tests post Deploy webApp
+        continueOnError: true
+        inputs:
+          script: |
+            #!/bin/bash
+            echo '-------------------------------------------------------------------------------'
+            echo '--        Starting post Postman Validation and Regression  Test              --'
+            echo '-------------------------------------------------------------------------------'
+            echo ' '
+            ls ./
+            newman run Validation.json -e ./post_env.json --reporters junit --reporter-junit-export ./result/validation_result.xml 
+            newman run Regresion.json -e ./post_env.json --reporters junit --reporter-junit-export ./result/regression_result.xml
+          workingDirectory: 'automatedtesting/postman/post_postman'
+
+
+     
+
+      - task: PublishTestResults@2 
+        displayName: Publicar los resultados de validacion de Postman
+        inputs:
+          testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+          testResultsFiles: '**/*.xml' 
+          searchFolder: 'automatedtesting/postman/post_postman/result/'
+          mergeTestResults: true # Optional
+          #failTaskOnFailedTests: false # Optional
+          testRunTitle: Postman Test
+          buildPlatform: # Optional
+          #buildConfiguration: # Optional
+          #publishRunAttachments: true # Optional
+

@@ -1,0 +1,69 @@
+{
+	"id": "e48c7b22-0536-4a82-b6d6-6ce72487a1ae",
+	"name": "post fakerestapy env Copy",
+	"values": [
+		{
+			"key": "url",
+			"value": "https://app5carlos-appservice.azurewebsites.net",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Title",
+			"value": "actividad carlos",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "DueDate",
+			"value": "2022-10-21T23:05:18.227Z",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "activities",
+			"value": "api/Activities",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "authors",
+			"value": "api/Authors",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "book",
+			"value": "/authors/books/",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "completed",
+			"value": "true",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "id",
+			"value": "1",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "ID",
+			"value": "1",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-11-03T03:17:16.004Z",
+	"_postman_exported_using": "Postman/9.30.4"
+}

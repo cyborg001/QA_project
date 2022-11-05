@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "628338f3-674e-4f29-a589-457a46a957c7",
+		"name": "Regression_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19662732"
+	},
+	"item": [
+		{
+			"name": "Post Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"console.log(jsonData);",
+							"pm.environment.set(\"ID\",jsonData.ID)",
+							"console.log(pm.variables.get('ID'))",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ID\": \"{{ID}}\",\n  \"Title\": \"{{Title}}\",\n  \"DueDate\": \"{{DueDate}}\",\n  \"Completed\": \"{{completed}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{activities}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    n = pm.variables.get('ID') ",
+							"    pm.expect(pm.response.text()).to.include(n);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{activities}}/{{ID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"juan de los palotes\");\r",
+							"});\r",
+							"console.log(jsonData)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ID\": \"{{ID}}\",\r\n  \"Title\": \"juan de los palotes\",\r\n  \"DueDate\": \"{{DueDate}}\",\r\n  \"Completed\": \"{{completed}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{activities}}/{{ID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{activities}}/{{ID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{activities}}",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "my_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

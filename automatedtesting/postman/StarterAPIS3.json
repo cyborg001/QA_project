@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "d29846f2-61bd-4a71-bf5f-c3d4ef30902c",
+		"name": "Starter_APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19662732"
+	},
+	"item": [
+		{
+			"name": "Get All Employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/employees/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful response\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"success\");",
+							"});",
+							"var json = pm.response.json();",
+							"pm.environment.set(\"id\", json.data.id);",
+							"",
+							"",
+							"var name = pm.environment.get(\"name\");",
+							"var salary = pm.environment.get(\"salary\");",
+							"var age = pm.environment.get(\"age\");",
+							"pm.test(\"Data validated \",function(){",
+							"    pm.expect(pm.response.text()).to.include(name);",
+							"    pm.expect(pm.response.text()).to.include(age);",
+							"    pm.expect(pm.response.text()).to.include(salary);",
+							"})",
+							"console.log(json.data.id)",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get employee",
+			"event": [
+			
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/employees/?id={{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"employees",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

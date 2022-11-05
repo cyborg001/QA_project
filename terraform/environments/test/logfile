@@ -1,0 +1,29 @@
+2022-10-20 18:06:33,008 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2022-10-20 18:06:33,026 INFO o.a.j.JMeter: Loading user properties from: C:\apache-jmeter-5.5\apache-jmeter-5.5\bin\user.properties
+2022-10-20 18:06:33,027 INFO o.a.j.JMeter: Loading system properties from: C:\apache-jmeter-5.5\apache-jmeter-5.5\bin\system.properties
+2022-10-20 18:06:33,034 INFO o.a.j.JMeter: Copyright (c) 1998-2022 The Apache Software Foundation
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: Version 5.5
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: java.version=18
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: os.name=Windows 11
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: os.arch=amd64
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: os.version=10.0
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: file.encoding=UTF-8
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: java.awt.headless=true
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: Max memory     =1073741824
+2022-10-20 18:06:33,035 INFO o.a.j.JMeter: Available Processors =8
+2022-10-20 18:06:33,044 INFO o.a.j.JMeter: Default Locale=English (EN)
+2022-10-20 18:06:33,045 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2022-10-20 18:06:33,045 INFO o.a.j.JMeter: JMeterHome=C:\apache-jmeter-5.5\apache-jmeter-5.5
+2022-10-20 18:06:33,045 INFO o.a.j.JMeter: user.dir  =C:\Users\DELL\projects\proyecto_final_udacity\terraform\environments\test
+2022-10-20 18:06:33,045 INFO o.a.j.JMeter: PWD       =C:\Users\DELL\projects\proyecto_final_udacity\terraform\environments\test
+2022-10-20 18:06:33,050 INFO o.a.j.JMeter: IP: 192.168.0.105 Name: DESKTOP-2K7VTTJ FullName: DESKTOP-2K7VTTJ
+2022-10-20 18:06:33,058 INFO o.a.j.JMeter: Setting property 'jmeter.reportgenerator.outputdir' to:'C:\Users\DELL\projects\proyecto_final_udacity\terraform\environments\test\.\here'
+2022-10-20 18:06:33,059 ERROR o.a.j.JMeter: An error occurred: 
+org.apache.jmeter.report.config.ConfigurationException: The file C:\Users\DELL\projects\proyecto_final_udacity\terraform\environments\test\.\Starter.jmx doesn't exist or can't be opened
+	at org.apache.jmeter.JMeter.runNonGui(JMeter.java:927) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.JMeter.startNonGui(JMeter.java:917) ~[ApacheJMeter_core.jar:5.5]
+	at org.apache.jmeter.JMeter.start(JMeter.java:485) ~[ApacheJMeter_core.jar:5.5]
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:577) ~[?:?]
+	at org.apache.jmeter.NewDriver.main(NewDriver.java:259) ~[ApacheJMeter.jar:5.5]

@@ -1,0 +1,5 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1666294805955,777,HTTP Request,200,OK,Starter_stress 2-1,text,true,,352,153,2,3,https://app5carlos-appservice.azurewebsites.net/api/Activities/3,777,0,686
+1666294806378,389,HTTP Request,200,OK,Starter_stress 2-2,text,true,,352,153,1,2,https://app5carlos-appservice.azurewebsites.net/api/Activities/5,389,0,309
+1666294805955,814,GET All Activities,200,OK,Starter_endurance 1-1,text,true,,3109,178,1,1,https://app5carlos-appservice.azurewebsites.net/api/Activities/,814,0,705
+1666294835867,341,GET All Activities,200,OK,Starter_endurance 1-2,text,true,,3109,178,1,1,https://app5carlos-appservice.azurewebsites.net/api/Activities/,341,0,249
